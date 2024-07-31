@@ -191,6 +191,8 @@ class Mamba2Simple(nn.Module):
                     ngroups=self.ngroups,
                     norm_before_gate=False,
                     initial_states=initial_states,
+                    outproj_weight=self.out_proj.weight,
+                    outproj_bias=self.out_proj.bias,
                     **dt_limit_kwargs,
                 )
                 A_b = -torch.exp(self.A_b_log)
@@ -210,14 +212,23 @@ class Mamba2Simple(nn.Module):
                     ngroups=self.ngroups,
                     norm_before_gate=False,
                     initial_states=initial_states,
+                    outproj_weight=self.out_proj.weight,
+                    outproj_bias=self.out_proj.bias,
                     **dt_limit_kwargs,
                 )
 
+                if not self.if_divide_out:
+                    out = out + out_b / 2
+                else:
+                    out = (out + out_b) / 2
+
+                '''
                 assert out.shape[1] == seqlen and out_b.shape[1] == seqlen
                 if not self.if_divide_out:
                     out = F.linear(out + out_b.flip([1]), self.out_proj.weight, self.out_proj.bias)
                 else:
                     out = F.linear(out + out_b.flip([1]) / 2, self.out_proj.weight, self.out_proj.bias)
+                '''
             
             else:
                 out = mamba_split_conv1d_scan_combined(

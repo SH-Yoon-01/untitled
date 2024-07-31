@@ -559,7 +559,7 @@ class VisionMamba(nn.Module):
 @register_model
 def vim2_tiny(pretrained=False, **kwargs):
     model = VisionMamba(
-        patch_size=16, embed_dim=256, depth=24, rms_norm=True, residual_in_fp32=True, fused_add_norm=True, final_pool_type='mean', if_abs_pos_embed=True, if_rope=False, if_rope_residual=False, bimamba_type="v2", if_cls_token=True, if_divide_out=True, use_middle_cls_token=True, expand=2, headdim=64, **kwargs)
+        patch_size=16, embed_dim=256, depth=16, rms_norm=True, residual_in_fp32=True, fused_add_norm=True, final_pool_type='mean', if_abs_pos_embed=True, if_rope=False, if_rope_residual=False, bimamba_type="v2", if_cls_token=True, if_divide_out=True, use_middle_cls_token=True, expand=2, headdim=64, **kwargs)
     model.default_cfg = _cfg()
     if pretrained:
         checkpoint = torch.hub.load_state_dict_from_url(

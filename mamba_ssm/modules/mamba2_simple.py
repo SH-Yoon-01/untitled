@@ -214,7 +214,7 @@ class Mamba2Simple(nn.Module):
                     **dt_limit_kwargs,
                 )
 
-                assert out[1] == seqlen and out_b[1] == seqlen
+                assert out.shape[1] == seqlen and out_b.shape[1] == seqlen
                 if not self.if_divide_out:
                     out = F.linear(out + out_b.flip([1]), self.out_proj.weight, self.out_proj.bias)
                 else:

@@ -126,10 +126,10 @@ class Mamba2Simple(nn.Module):
 
         # bidirectional
         if bimamba_type == "v2":
-            self.dt_bias_b = nn.Parameter(inv_dt)
+            # self.dt_bias_b = nn.Parameter(inv_dt)
             # Just to be explicit. Without this we already don't put wd on dt_bias because of the check
             # name.endswith("bias") in param_grouping.py
-            self.dt_bias_b._no_weight_decay = True
+            # self.dt_bias_b._no_weight_decay = True
             
             self.A_b_log = nn.Parameter(A_log)
             # self.register_buffer("A_b_log", torch.zeros(self.nheads, dtype=torch.float32, device=device), persistent=True)
@@ -198,7 +198,7 @@ class Mamba2Simple(nn.Module):
                     zxbcdt.flip([1]),
                     rearrange(self.conv1d_b.weight, "d 1 w -> d w"),
                     self.conv1d_b.bias,
-                    self.dt_bias_b,
+                    self.dt_bias,
                     A_b,
                     D=self.D_b,
                     chunk_size=self.chunk_size,

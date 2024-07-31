@@ -19,7 +19,6 @@ except ImportError:
 
 from mamba_ssm.ops.triton.ssd_combined import mamba_chunk_scan_combined
 from mamba_ssm.ops.triton.ssd_combined import mamba_split_conv1d_scan_combined
-from mamba_ssm.ops.triton.ssd_combined import mamba_split_conv1d_scan_combined_no_out_proj
 
 
 class Mamba2Simple(nn.Module):

@@ -176,7 +176,7 @@ class Mamba2Simple(nn.Module):
         if self.use_mem_eff_path:
             if self.bimamba_type == "v2":
                 # Fully fused path
-                out = mamba_split_conv1d_scan_combined_no_out_proj(
+                out = mamba_split_conv1d_scan_combined(
                     zxbcdt,
                     rearrange(self.conv1d.weight, "d 1 w -> d w"),
                     self.conv1d.bias,
@@ -195,7 +195,7 @@ class Mamba2Simple(nn.Module):
                     **dt_limit_kwargs,
                 )
                 A_b = -torch.exp(self.A_b_log)
-                out_b = mamba_split_conv1d_scan_combined_no_out_proj(
+                out_b = mamba_split_conv1d_scan_combined(
                     zxbcdt.flip([1]),
                     rearrange(self.conv1d_b.weight, "d 1 w -> d w"),
                     self.conv1d_b.bias,
